@@ -19,25 +19,30 @@ function submitComment(commentControl)
  		]
 	}
 
-	$.ajax({
-type: "POST",
-url: url,
-data: JSON.stringify(body),
-processData: false,
-headers: {
-"Ocp-Apim-Subscription-Key": apiKey,
-"Content-Type": "application/json"
-}
-}).done(function(result){
-var sentimentRating = Math.round((result.documents[0].score * 100)/ 25) + 1;
-var currentItemId = JSON.parse(localStorage.getItem('currentItemId'));
-window.location.href = '/comments?classId=' + currentItemId + '&rating=' + sentimentRating + '&comments=' + comments;
-}).fail(function(xhr, status, err) {
-alert(err);
-});
+	$.ajax(
+	{
+		type: "POST",
+		url: url,
+		data: JSON.stringify(body),
+		processData: false,
+		headers: 
+		{
+			"Ocp-Apim-Subscription-Key": apiKey,
+			"Content-Type": "application/json"
+		}
+	}).done(function(result)
+	{
+		var sentimentRating = Math.round((result.documents[0].score * 100)/ 25) + 1;
+		var currentItemId = JSON.parse(localStorage.getItem('currentItemId'));
+		window.location.href = '/comments?classId=' + currentItemId + '&rating=' + sentimentRating + '&comments=' + comments;
+	}).fail(function(xhr, status, err) 
+	{
+		alert(err);
+	});
 }
 
-function navigateToComments(classId) {
+function navigateToComments(classId) 
+{
     localStorage.setItem('currentItemId', JSON.stringify(classId));
     window.location.href = 'comments?classId=' + classId;
 }
